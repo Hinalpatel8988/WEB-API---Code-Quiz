@@ -1,0 +1,43 @@
+
+body {
+    background-color: beige;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    background: white;
+    border-radius: 3px;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 12px;
+}
+
+
+main {
+    text-align: center;
+    justify-content: center;
+    flex: 1 0 auto;
+    margin-left: 200px;
+    margin-right: 200px;
+    background-color: beige;
+}
+
+@media screen and (min-width: 850px) {
+    .card {
+      max-width: 2000px;
+    }
+  }
