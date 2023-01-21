@@ -4,6 +4,7 @@ body {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -18,12 +19,43 @@ body {
     margin-bottom: 10px;
 }
 
+.question {
+    justify-content: center;
+}
+
+.choices {
+    background-color: lightcoral;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    padding: 5px 20px;
+    width: 250px;
+    max-height: 50px;
+    display: block;
+    font-size: 16px;
+    margin: 20px;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 15px;
+  }
+  
+  .choices:hover {
+    cursor: pointer;
+    background-color: #8f96bc
+  }
+  
+  .choices:active {
+    background-color: #67a2de;
+  }
+  
+
 p {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 12px;
+    font-size: 20px;
 }
 
 

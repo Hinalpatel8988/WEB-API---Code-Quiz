@@ -40,6 +40,11 @@ var startquiz = document.getElementById("startquiz")
 var timer = document.getElementById("timer")
 var question = document.querySelector("#question")
 var results = document.querySelector("#results")
+// var choices = document.getElementById("choices")
+var choices1 = document.getElementById ("choices1")
+var choices2 = document.getElementById ("choices2")
+var choices3 = document.getElementById ("choices3")
+var choices4 = document.getElementById ("choices4")
 var listhighscores = document.querySelector("#listhighscores")
 listhighscores.style.display = "none"
 results.style.display = "none"
@@ -69,4 +74,83 @@ function startgame() {
 displayQuestionAnswer(index);
 
 }
+
+function displayQuestionAnswer(index) {
+    question.style.display = "block"
+    mainbody.style.display = "none"
+
+    // if(index < question.length) {
+    //     var currentQuestion = question[index]
+    //     question1.textContent = currentQuestion.question;
+    //     choices1.textContent = allQuestions[index].choices[0];
+    //     choices2.textContent = allQuestions[index].choices[1];
+    //     choices3.textContent = allQuestions[index].choices[2];
+    //     choices4.textContent = allQuestions[index].choices[3];
+
+    // }
+    // question.textContent ="";
+    // choices1.textContent ="";
+    // choices2.textContent ="";
+    // choices3.textContent ="";
+    // choices4.textContent ="";
+
+    // for (var i = 0; i <allQuestions.length; i++) {
+    //     var userQuestion = allQuestions[index].question;
+    //     var userChoices = allQuestions[index].choices;
+    //     question.textContent = userQuestion;
+    // }
+      console.log(index)
+      console.log(allQuestions.length)
+
+      if (index === allQuestions.length) {
+        
+        stopTimer()
+        endQuiz()
+
+      } else {
+        
+        var question1 = document.querySelector("h3")
+        question1.textContent = allQuestions[index].question
+        console.log(allQuestions[index].choices[0])
+
+        var choices1 = document.getElementById("choices1")
+        choices1.textContent = allQuestions[index].choices[0]
+        choices1.addEventListener("click", choiceSelect)
+
+        var choices2 = document.getElementById("choices2")
+        choices2.textContent = allQuestions[index].choices[1]
+        choices2.addEventListener("click", choiceSelect)
+
+        var choices3 = document.getElementById("choices3")
+        choices3.textContent = allQuestions[index].choices[2]
+        choices3.addEventListener("click", choiceSelect)
+
+        var choices4 = document.getElementById("choices4")
+        choices4.textContent = allQuestions[index].choices[3]
+        choices4.addEventListener("click", choiceSelect)
+    
+    }
+}
+
+function choiceSelect(event) {
+    console.log(event.target.textContent, "clicked choice");
+    console.log(allQuestions[index].answer, "Answer");
+    console.log(allQuestions[index].choices, "choices");
+
+    if (event.target.textContent === allQuestions[index].answer) {
+        console.log(allQuestions[index].trueanswer, "correct");
+        trueanswer.textContent = "Correct!";
+        score++
+        index++
+        displayQuestionAnswer()
+
+    } else {
+        console.log(allQuestions[index].trueanswer, "incorrect");
+        sec -= 15;
+        trueanswer.textContent = "Incorrect!";
+        index++
+        displayQuestionAnswer()
+    }
+}
+
 
