@@ -1,4 +1,4 @@
-const question = [
+var allQuestions = [
     {
         question: "Questions 1 : Javascript is an _______ language?",
         choices: ["a. Object-Oriented", "b. Object-Based", "c. Procedural", "d. None of the above"],
@@ -33,5 +33,40 @@ const question = [
         question: "Questions 7 : Which of the following keywords is used to define a variable in Javascript?",
         choices: ["a. var", "b. let", "c. Both A and B", "d. None of the above"],
         answer: "c"
-    };
+    }
 ];
+
+var startquiz = document.getElementById("startquiz")
+var timer = document.getElementById("timer")
+var question = document.querySelector("#question")
+var results = document.querySelector("#results")
+var listhighscores = document.querySelector("#listhighscores")
+listhighscores.style.display = "none"
+results.style.display = "none"
+question.style.display = "none"
+var score = 0;
+var sec = 100;
+var index = 0;
+var timer;
+var timeLeft = 100;
+
+startquiz.addEventListener("click" , startgame);
+
+function startgame() {
+    timeInterval = setInterval(() => {
+        if (timeLeft > 1) {
+            timer.textContent = "Time: " + timeLeft + " seconds left";
+            timeLeft--;
+        } else if (timeLeft === 1) {
+            timer.textContent = "Time: " + timeLeft + " seconds left";
+            timeLeft--;
+        }  else {
+            timer.textContent = "";
+            clearInterval(timeInterval);
+            finishGame();
+        }
+}, 1000);
+displayQuestionAnswer(index);
+
+}
+
