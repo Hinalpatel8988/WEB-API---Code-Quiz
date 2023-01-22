@@ -41,16 +41,20 @@ var timer = document.getElementById("timer")
 var question = document.querySelector("#question")
 var results = document.querySelector("#results")
 // var choices = document.getElementById("choices")
+var answer = document.querySelector("#answer")
 var choices1 = document.getElementById ("choices1")
 var choices2 = document.getElementById ("choices2")
 var choices3 = document.getElementById ("choices3")
 var choices4 = document.getElementById ("choices4")
+var finalScore = document.getElementById ("finalscore")
+var initial = document.getElementById("resultbox")
 var listhighscores = document.querySelector("#listhighscores")
 listhighscores.style.display = "none"
 results.style.display = "none"
 question.style.display = "none"
 var score = 0;
 var sec = 100;
+var penalty = 20;
 var index = 0;
 var timer;
 var timeLeft = 100;
@@ -60,10 +64,10 @@ startquiz.addEventListener("click" , startgame);
 function startgame() {
     timeInterval = setInterval(() => {
         if (timeLeft > 1) {
-            timer.textContent = "Time: " + timeLeft + " seconds left";
+            timer.textContent = "Time: " + timeLeft + " ";
             timeLeft--;
         } else if (timeLeft === 1) {
-            timer.textContent = "Time: " + timeLeft + " seconds left";
+            timer.textContent = "Time: " + timeLeft + " ";
             timeLeft--;
         }  else {
             timer.textContent = "";
@@ -71,47 +75,24 @@ function startgame() {
             finishGame();
         }
 }, 1000);
-displayQuestionAnswer(index);
+displayQuestionAnswer();
 
 }
 
-function displayQuestionAnswer(index) {
+function displayQuestionAnswer() {
     question.style.display = "block"
     mainbody.style.display = "none"
 
-    // if(index < question.length) {
-    //     var currentQuestion = question[index]
-    //     question1.textContent = currentQuestion.question;
-    //     choices1.textContent = allQuestions[index].choices[0];
-    //     choices2.textContent = allQuestions[index].choices[1];
-    //     choices3.textContent = allQuestions[index].choices[2];
-    //     choices4.textContent = allQuestions[index].choices[3];
-
-    // }
-    // question.textContent ="";
-    // choices1.textContent ="";
-    // choices2.textContent ="";
-    // choices3.textContent ="";
-    // choices4.textContent ="";
-
-    // for (var i = 0; i <allQuestions.length; i++) {
-    //     var userQuestion = allQuestions[index].question;
-    //     var userChoices = allQuestions[index].choices;
-    //     question.textContent = userQuestion;
-    // }
-      console.log(index)
-      console.log(allQuestions.length)
-
       if (index === allQuestions.length) {
         
-        stopTimer()
+        // stopTimer()
         endQuiz()
 
       } else {
         
         var question1 = document.querySelector("h3")
         question1.textContent = allQuestions[index].question
-        console.log(allQuestions[index].choices[0])
+        console.log(allQuestions[index].choices)
 
         var choices1 = document.getElementById("choices1")
         choices1.textContent = allQuestions[index].choices[0]
@@ -133,24 +114,34 @@ function displayQuestionAnswer(index) {
 }
 
 function choiceSelect(event) {
-    console.log(event.target.textContent, "clicked choice");
-    console.log(allQuestions[index].answer, "Answer");
-    console.log(allQuestions[index].choices, "choices");
-
-    if (event.target.textContent === allQuestions[index].answer) {
-        console.log(allQuestions[index].trueanswer, "correct");
+    if (event.target.textContent === allQuestions.answer) {
+        console.log(allQuestions.trueanswer, "correct");
         trueanswer.textContent = "Correct!";
         score++
         index++
         displayQuestionAnswer()
 
     } else {
-        console.log(allQuestions[index].trueanswer, "incorrect");
-        sec -= 15;
+        console.log(allQuestions.trueanswer, "incorrect");
         trueanswer.textContent = "Incorrect!";
         index++
         displayQuestionAnswer()
     }
 }
+
+function stopTimer() {
+    clearInterval(timer);
+}
+
+function endQuiz() {
+    stopTimer()
+    question.style.display = "none"
+    results.style.display = "block"
+    finalScore.textContent = 'Congratulations! Your final score is: ' + score;
+}
+
+
+
+
 
 
