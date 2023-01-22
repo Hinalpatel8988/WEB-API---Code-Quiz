@@ -14,10 +14,15 @@
     <header>
         <section class= "header"></section>
             <section>
-                <div button id="viewscore">View Highscore</button>
+                <div class="float-start ms-4">
+                <button class="viewscorebtn" id="viewscore">View Highscore</button>
+            </div>
             </section>
             <section>
-                <div id="timer"> Timer: 100 </div>
+                <div class="float-end me-4" id="timer" style="
+                padding-right: 78px;
+                padding-top: 38px;
+            ">  </div>
                 <div id="displaytime"></div>
             </section>
 
@@ -50,17 +55,17 @@
 <section id="results" style="display: block;text-align: center;">
     <h2 style="padding-top: 100px;">Quiz Completed!</h2>
     <h3 id="finalscore" style="padding-top: 33px;"> Your score is</h3>
-    <div class="intials"></div>
+    <div class="intials" id="intials"></div>
     <h3 style="padding-top: 25px;"> Enter Your Initials To Save Your Score:</h3>
     <input id="resultbox" />
     <button id="submit"> Submit</button>
 </section>
 
-<section id="listhighscores">
-    <h3>Highscores</h3>
+<section id="listhighscores" style="text-align: center;">
+    <h2>Highscores</h2>
     <h2 id="displayhignscores"></h2>
     <button id="startagainbtn">Start Again</button>
-    <button id="clearhighscores">Clear High Scores</button>
+    <button id="clearhighscoresbtn">Clear High Scores</button>
 </section>
         </div>
             <script src="assets\script.js"></script>  

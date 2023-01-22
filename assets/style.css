@@ -66,6 +66,7 @@ main {
     margin-left: 200px;
     margin-right: 200px;
     background-color: beige;
+    padding-top: 50px;
 }
 
 @media screen and (min-width: 850px) {

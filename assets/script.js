@@ -38,9 +38,12 @@ var allQuestions = [
 
 var startquiz = document.getElementById("startquiz")
 var timer = document.getElementById("timer")
+var startagainbtn = document.getElementById("startagainbtn")
+var clearhighscoresbtn = document.getElementById("clearhighscoresbtn")
 var question = document.querySelector("#question")
 var results = document.querySelector("#results")
 // var choices = document.getElementById("choices")
+var intials = document.getElementById ("intials")
 var answer = document.querySelector("#answer")
 var choices1 = document.getElementById ("choices1")
 var choices2 = document.getElementById ("choices2")
@@ -48,31 +51,31 @@ var choices3 = document.getElementById ("choices3")
 var choices4 = document.getElementById ("choices4")
 var finalScore = document.getElementById ("finalscore")
 var initial = document.getElementById("resultbox")
+var submit = document.getElementById("submit")
+var viewscorebtn = document.getElementById("viewscore")
 var listhighscores = document.querySelector("#listhighscores")
 listhighscores.style.display = "none"
 results.style.display = "none"
 question.style.display = "none"
 var score = 0;
+var scoreList = [];
 var sec = 100;
 var penalty = 20;
 var index = 0;
 var timer;
 var timeLeft = 100;
+var timeInterval;
 
 startquiz.addEventListener("click" , startgame);
 
 function startgame() {
-    timeInterval = setInterval(() => {
-        if (timeLeft > 1) {
-            timer.textContent = "Time: " + timeLeft + " ";
-            timeLeft--;
-        } else if (timeLeft === 1) {
-            timer.textContent = "Time: " + timeLeft + " ";
-            timeLeft--;
-        }  else {
-            timer.textContent = "";
-            clearInterval(timeInterval);
-            finishGame();
+    timeInterval = setInterval(function () {
+        timeLeft--;
+        timer.textContent = "TIMER :" + timeLeft;
+    
+        if (timeLeft === 0 || index >= allQuestions.length) {
+          clearInterval(timeInterval);
+            endQuiz ();
         }
 }, 1000);
 displayQuestionAnswer();
@@ -84,8 +87,6 @@ function displayQuestionAnswer() {
     mainbody.style.display = "none"
 
       if (index === allQuestions.length) {
-        
-        // stopTimer()
         endQuiz()
 
       } else {
@@ -96,49 +97,130 @@ function displayQuestionAnswer() {
 
         var choices1 = document.getElementById("choices1")
         choices1.textContent = allQuestions[index].choices[0]
-        choices1.addEventListener("click", choiceSelect)
+        choices1.addEventListener("click", compareAnswer)
 
         var choices2 = document.getElementById("choices2")
         choices2.textContent = allQuestions[index].choices[1]
-        choices2.addEventListener("click", choiceSelect)
+        choices2.addEventListener("click", compareAnswer)
 
         var choices3 = document.getElementById("choices3")
         choices3.textContent = allQuestions[index].choices[2]
-        choices3.addEventListener("click", choiceSelect)
+        choices3.addEventListener("click", compareAnswer)
 
         var choices4 = document.getElementById("choices4")
         choices4.textContent = allQuestions[index].choices[3]
-        choices4.addEventListener("click", choiceSelect)
+        choices4.addEventListener("click", compareAnswer)
     
     }
 }
 
-function choiceSelect(event) {
-    if (event.target.textContent === allQuestions.answer) {
-        console.log(allQuestions.trueanswer, "correct");
-        trueanswer.textContent = "Correct!";
-        score++
-        index++
-        displayQuestionAnswer()
-
+function compareAnswer(event) {
+    if (index >= allQuestions.length) {
+      endQuiz();
+      clearInterval(timeInterval);
     } else {
-        console.log(allQuestions.trueanswer, "incorrect");
-        trueanswer.textContent = "Incorrect!";
-        index++
-        displayQuestionAnswer()
+      if (event === allQuestions[index].answer) {
+        trueanswer.textContent = "You are correct!";
+      } else {
+        timeLeft -= 10;
+        trueanswer.textContent = "You are Wrong!";
+      }
+      score = timeLeft;
+      index++;
+      displayQuestionAnswer();
     }
-}
-
-function stopTimer() {
-    clearInterval(timer);
-}
+  }
 
 function endQuiz() {
-    stopTimer()
-    question.style.display = "none"
+    question.style  .display = "none"
     results.style.display = "block"
+    trueanswer.style.display = "none"
     finalScore.textContent = 'Congratulations! Your final score is: ' + score;
 }
+
+function displayhignscores() {
+    removeScore();
+    addScore();
+    scoreList.sort((a, b) => {
+      return b.score - a.score;
+    });
+
+    topTen = scoreList.slice(0, 10);
+  
+    for (var i = 0; i < topTen.length; i++) {
+      var player = topTen[i].player;
+      var score = topTen[i].score;
+  
+      var newDiv = document.createElement("div");
+      displayScoreDiv.appendChild(newDiv);
+  
+      var newLabel = document.createElement("label");
+      newLabel.textContent = player + " - " + score;
+      newDiv.appendChild(newLabel);
+    }
+  }
+
+  function addScore() {
+    displayScoreDiv = document.createElement("div");
+    displayScoreDiv.setAttribute("id", "playerInitials");
+    document.getElementById("displayhignscores").appendChild(displayScoreDiv);
+  }
+
+  function removeScore() {
+    var removeScores = document.getElementById("playerInitials");
+    if (removeScores !== null) {
+      removeScores.remove();
+    } else {
+    }
+  }
+
+function getScore() {
+    var storedScore = JSON.parse(localStorage.getItem("highScore"));
+    if (storedScore !== null) {
+      scoreList = storedScore;
+    }
+  }
+
+  function saveScore() {
+    localStorage.setItem("highScore", JSON.stringify(scoreList));
+  }
+
+  function displayscores() {
+    displayscores = document.createElement("div");
+    displayscores.setAttribute("id", "playerInitials");
+    document.getElementById("displayhignscores").appendChild(displayscores);
+  }
+
+  submit.addEventListener("click", function (event) {
+    event.preventDefault();
+    var playerInitials = resultbox.value;
+    var newScore = {
+      player: playerInitials,
+      score: score,
+    };
+    
+    scoreList.push(newScore);
+    saveScore();
+    displayhignscores();
+  });
+  
+  viewscorebtn.addEventListener("click", function (event) {
+    results.style.display = "none"
+    mainbody.style.display = "none"
+    listhighscores.style.display = "block"
+    displayhignscores();
+  });
+
+  startagainbtn.addEventListener("click", function (event) {
+    location.reload();
+  });
+  
+  clearhighscoresbtn.addEventListener("click", function (event) {
+    scoreList = [];
+    localStorage.setItem("highScore", JSON.stringify(scoreList));
+    displayhignscores();
+    saveScore();
+  });
 
 
 
