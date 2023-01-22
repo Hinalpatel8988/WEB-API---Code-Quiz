@@ -23,7 +23,7 @@ THEN I can save my initials and score
 
 Deployed Link
 
-Submission The URL of the deployed application. - https://hinalpatel8988.github.io/WEB-API---Code-Quiz/
+The URL of the deployed application. - https://hinalpatel8988.github.io/WEB-API---Code-Quiz/
 
 The URL of the GitHub repository, with a unique name and a README that describes the project - https://github.com/Hinalpatel8988/WEB-API---Code-Quiz.git
 
